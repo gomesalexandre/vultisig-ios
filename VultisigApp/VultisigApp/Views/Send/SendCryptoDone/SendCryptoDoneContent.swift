@@ -21,6 +21,7 @@ struct SendCryptoContent: Hashable {
 
     let fromAddress: String
     let toAddress: String
+    var toVaultName: String? = nil
     let fee: FeeDisplay
     let keysignPayload: KeysignPayload?
     let pubKeyECDSA: String

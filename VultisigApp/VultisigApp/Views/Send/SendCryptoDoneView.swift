@@ -5,6 +5,7 @@
 //  Created by Amol Kumar on 2024-03-17.
 //
 
+import SwiftData
 import SwiftUI
 
 struct SendCryptoDoneView: View {
@@ -19,6 +20,8 @@ struct SendCryptoDoneView: View {
     let sendTransaction: SendTransaction?
     let swapTransaction: SwapTransaction?
     let keysignPayload: KeysignPayload?
+
+    @Query private var vaults: [Vault]
 
     @StateObject private var sendSummaryViewModel = SendSummaryViewModel()
     @StateObject private var swapSummaryViewModel = SwapCryptoViewModel()
@@ -65,7 +68,10 @@ struct SendCryptoDoneView: View {
     }
 
     func sendContent(tx: SendTransaction) -> some View {
-        SendCryptoDoneContentView(
+        let chain = tx.coin.chain
+        let toAddress = tx.toAddress
+        let toVaultName = vaults.first { v in v.coins.contains { coin in coin.chain == chain && coin.address == toAddress } }?.name
+        return SendCryptoDoneContentView(
             input: SendCryptoContent(
                 coin: tx.coin,
                 amountCrypto: "\(tx.amount) \(tx.coin.ticker)",
@@ -76,6 +82,7 @@ struct SendCryptoDoneView: View {
                 isSend: isSend,
                 fromAddress: tx.fromAddress,
                 toAddress: tx.toAddress,
+                toVaultName: toVaultName,
                 fee: FeeDisplay(crypto: tx.gasInReadable, fiat: sendSummaryViewModel.feesInReadable(tx: tx, vault: vault)),
                 keysignPayload: keysignPayload,
                 pubKeyECDSA: vault.pubKeyECDSA
