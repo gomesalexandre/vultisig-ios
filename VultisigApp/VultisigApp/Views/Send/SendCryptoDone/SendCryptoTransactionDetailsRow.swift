@@ -67,6 +67,7 @@ struct SendCryptoTransactionDetailsRow<AccessoryView: View>: View {
                                     .foregroundStyle(Theme.colors.textPrimary)
                                     .lineLimit(1)
                                     .truncationMode(.middle)
+                                    .layoutPriority(1)
                                 Text("(\(bracketValue))")
                                     .foregroundStyle(Theme.colors.textTertiary)
                                     .lineLimit(1)
