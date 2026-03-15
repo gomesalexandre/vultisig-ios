@@ -58,14 +58,13 @@ struct SendCryptoSecondaryDoneView: View {
             statusViewModel.stopPolling()
         }
         .onLoad {
-            let address = input.toAddress
-            let addressItemsDescriptor = FetchDescriptor<AddressBookItem>(
-                predicate: #Predicate { $0.address == address }
-            )
-            let addressItems = try? modelContext.fetch(addressItemsDescriptor)
+            let address = input.toAddress.lowercased()
+            let allItemsDescriptor = FetchDescriptor<AddressBookItem>()
+            let allItems = try? modelContext.fetch(allItemsDescriptor)
+            let isInAddressBook = allItems?.contains { $0.address.lowercased() == address } ?? false
 
             // Suppress "add to address book" if destination belongs to any vault or is already in address book
-            canShowAddressBook = addressItems?.isEmpty ?? false && input.toVaultName == nil && input.toAddressBookTitle == nil
+            canShowAddressBook = !isInAddressBook && input.toVaultName == nil && input.toAddressBookTitle == nil
         }
         .onChange(of: navigateToAddressBook) { _, shouldNavigate in
             if shouldNavigate {
