@@ -21,6 +21,7 @@ struct SendCryptoSecondaryDoneView: View {
 
     @Environment(\.modelContext) var modelContext
     @EnvironmentObject var appViewModel: AppViewModel
+    @Query var vaults: [Vault]
 
     init(input: SendCryptoContent) {
         self.input = input
@@ -31,6 +32,13 @@ struct SendCryptoSecondaryDoneView: View {
             amount: input.amountCrypto,
             toAddress: input.toAddress
         ))
+    }
+
+    private var toVaultName: String? {
+        let chain = input.coin.chain
+        let address = input.toAddress
+        let match = vaults.first { v in v.coins.contains { coin in coin.chain == chain && coin.address == address } }
+        return match?.name
     }
 
     var showAddressBookButton: Bool {
@@ -64,7 +72,7 @@ struct SendCryptoSecondaryDoneView: View {
             )
             let addressItems = try? modelContext.fetch(addressItemsDescriptor)
 
-            canShowAddressBook = addressItems?.isEmpty ?? false && !(appViewModel.selectedVault?.coins.map(\.address).contains(input.toAddress) ?? true)
+            canShowAddressBook = addressItems?.isEmpty ?? false && toVaultName == nil
         }
         .onChange(of: navigateToAddressBook) { _, shouldNavigate in
             if shouldNavigate {
@@ -123,7 +131,8 @@ struct SendCryptoSecondaryDoneView: View {
             Group {
                 SendCryptoTransactionDetailsRow(
                     title: "to",
-                    description: input.toAddress
+                    description: toVaultName ?? input.toAddress,
+                    bracketValue: toVaultName != nil ? input.toAddress : nil
                 ) {
                     addToAddressBookButton
                         .showIf(showAddressBookButton)
