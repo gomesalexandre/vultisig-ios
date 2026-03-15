@@ -22,6 +22,7 @@ struct SendCryptoDoneView: View {
     let keysignPayload: KeysignPayload?
 
     @Query private var vaults: [Vault]
+    @Query private var addressBookItems: [AddressBookItem]
 
     @StateObject private var sendSummaryViewModel = SendSummaryViewModel()
     @StateObject private var swapSummaryViewModel = SwapCryptoViewModel()
@@ -74,6 +75,16 @@ struct SendCryptoDoneView: View {
         return vaults.first { v in v.coins.contains { coin in coin.chain == chain && coin.address == address } }?.name
     }
 
+    private var toAddressBookTitle: String? {
+        guard let tx = sendTransaction else { return nil }
+        let txChainType = AddressBookChainType(coinMeta: tx.coin.toCoinMeta())
+        let address = tx.toAddress.lowercased()
+        return addressBookItems.first { item in
+            AddressBookChainType(coinMeta: item.coinMeta) == txChainType &&
+            item.address.lowercased() == address
+        }?.title
+    }
+
     func sendContent(tx: SendTransaction) -> some View {
         SendCryptoDoneContentView(
             input: SendCryptoContent(
@@ -87,6 +98,7 @@ struct SendCryptoDoneView: View {
                 fromAddress: tx.fromAddress,
                 toAddress: tx.toAddress,
                 toVaultName: toVaultName,
+                toAddressBookTitle: toAddressBookTitle,
                 fee: FeeDisplay(crypto: tx.gasInReadable, fiat: sendSummaryViewModel.feesInReadable(tx: tx, vault: vault)),
                 keysignPayload: keysignPayload,
                 pubKeyECDSA: vault.pubKeyECDSA

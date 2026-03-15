@@ -14,6 +14,7 @@ struct SendVerifyScreen: View {
     let vault: Vault
 
     @Query var vaults: [Vault]
+    @Query var addressBookItems: [AddressBookItem]
 
     @State var fastPasswordPresented = false
 
@@ -66,6 +67,15 @@ struct SendVerifyScreen: View {
         return match?.name
     }
 
+    private var toAddressBookTitle: String? {
+        let txChainType = AddressBookChainType(coinMeta: tx.coin.toCoinMeta())
+        let address = tx.toAddress.lowercased()
+        return addressBookItems.first { item in
+            AddressBookChainType(coinMeta: item.coinMeta) == txChainType &&
+            item.address.lowercased() == address
+        }?.title
+    }
+
     var fields: some View {
         SendCryptoVerifySummaryView(
             input: SendCryptoVerifySummary(
@@ -73,6 +83,7 @@ struct SendVerifyScreen: View {
                 fromAddress: tx.fromAddress,
                 toAddress: tx.toAddress,
                 toVaultName: toVaultName,
+                toAddressBookTitle: toAddressBookTitle,
                 network: tx.coin.chain.name,
                 networkImage: tx.coin.chain.logo,
                 memo: tx.memo,
