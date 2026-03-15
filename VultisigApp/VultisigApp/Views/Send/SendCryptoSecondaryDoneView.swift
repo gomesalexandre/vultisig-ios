@@ -64,6 +64,7 @@ struct SendCryptoSecondaryDoneView: View {
             )
             let addressItems = try? modelContext.fetch(addressItemsDescriptor)
 
+            // Suppress "add to address book" if destination belongs to any vault, not just the selected one
             canShowAddressBook = addressItems?.isEmpty ?? false && input.toVaultName == nil
         }
         .onChange(of: navigateToAddressBook) { _, shouldNavigate in

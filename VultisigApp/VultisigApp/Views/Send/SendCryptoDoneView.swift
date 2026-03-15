@@ -67,11 +67,15 @@ struct SendCryptoDoneView: View {
         sendContent(tx: tx)
     }
 
-    func sendContent(tx: SendTransaction) -> some View {
+    private var toVaultName: String? {
+        guard let tx = sendTransaction else { return nil }
         let chain = tx.coin.chain
-        let toAddress = tx.toAddress
-        let toVaultName = vaults.first { v in v.coins.contains { coin in coin.chain == chain && coin.address == toAddress } }?.name
-        return SendCryptoDoneContentView(
+        let address = tx.toAddress
+        return vaults.first { v in v.coins.contains { coin in coin.chain == chain && coin.address == address } }?.name
+    }
+
+    func sendContent(tx: SendTransaction) -> some View {
+        SendCryptoDoneContentView(
             input: SendCryptoContent(
                 coin: tx.coin,
                 amountCrypto: "\(tx.amount) \(tx.coin.ticker)",

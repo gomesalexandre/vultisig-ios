@@ -147,20 +147,20 @@ struct SendCryptoVerifySummaryView<ContentFooter: View>: View {
     ) -> some View {
         HStack(spacing: 4) {
             Text(NSLocalizedString(title, comment: ""))
-                .foregroundColor(Theme.colors.textTertiary)
+                .foregroundStyle(Theme.colors.textTertiary)
                 .frame(minWidth: 52, alignment: .leading)
 
             if let secondRowText {
                 VStack(alignment: .trailing, spacing: 2) {
                     Text(value)
-                        .foregroundColor(color ?? Theme.colors.textPrimary)
+                        .foregroundStyle(color ?? Theme.colors.textPrimary)
                         .lineLimit(1)
                         .truncationMode(.middle)
                         .multilineTextAlignment(.trailing)
                         .fixedSize(horizontal: false, vertical: true)
 
                     Text(secondRowText)
-                        .foregroundColor(Theme.colors.textTertiary)
+                        .foregroundStyle(Theme.colors.textTertiary)
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
             } else {
@@ -185,7 +185,7 @@ struct SendCryptoVerifySummaryView<ContentFooter: View>: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                     } else {
                         Text(value)
-                            .foregroundColor(color ?? Theme.colors.textPrimary)
+                            .foregroundStyle(color ?? Theme.colors.textPrimary)
                             .lineLimit(isMultiLine ? nil : 1)
                             .truncationMode(.middle)
                             .frame(maxWidth: .infinity, alignment: .leading)
