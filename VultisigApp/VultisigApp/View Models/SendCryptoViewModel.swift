@@ -244,6 +244,11 @@ struct SendCryptoLogic {
             let originalInput = tx.toAddress
             let resolvedAddress = try await AddressService.resolveInput(tx.toAddress, chain: tx.coin.chain)
             await MainActor.run {
+                // Three cases:
+                // 1. Name resolved (e.g. ENS): set label = original input, marker = resolved hex, update address.
+                // 2. Loop re-entry: onChange fires again after we set tx.toAddress = resolvedHex above.
+                //    originalInput == resolvedAddress == lastResolvedAddress → skip, label already set.
+                // 3. Raw address typed directly: clear label and marker.
                 if originalInput != resolvedAddress {
                     tx.toAddress = resolvedAddress
                     tx.toAddressLabel = originalInput
