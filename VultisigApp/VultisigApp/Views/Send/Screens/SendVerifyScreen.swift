@@ -16,7 +16,7 @@ struct SendVerifyScreen: View {
     @Query var vaults: [Vault]
     @Query var addressBookItems: [AddressBookItem]
 
-    @State var fastPasswordPresented = false
+    @State private var fastPasswordPresented = false
 
     @EnvironmentObject var settingsViewModel: SettingsViewModel
     @Environment(\.router) var router

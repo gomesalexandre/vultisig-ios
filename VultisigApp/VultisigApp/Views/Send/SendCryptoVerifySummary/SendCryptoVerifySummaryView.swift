@@ -201,7 +201,7 @@ struct SendCryptoVerifySummaryView<ContentFooter: View>: View {
 
     var summaryTitle: some View {
         Text(NSLocalizedString("youreSending", comment: ""))
-            .foregroundColor(Theme.colors.textSecondary)
+            .foregroundStyle(Theme.colors.textSecondary)
             .font(Theme.fonts.bodyMMedium)
             .padding(.bottom, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -215,10 +215,10 @@ struct SendCryptoVerifySummaryView<ContentFooter: View>: View {
                 .cornerRadius(32)
 
             Text(input.amount)
-                .foregroundColor(Theme.colors.textPrimary)
+                .foregroundStyle(Theme.colors.textPrimary)
 
             Text(input.coinTicker)
-                .foregroundColor(Theme.colors.textTertiary)
+                .foregroundStyle(Theme.colors.textTertiary)
 
             Spacer()
         }

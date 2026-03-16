@@ -27,8 +27,8 @@ struct SendCryptoDoneView: View {
     @StateObject private var sendSummaryViewModel = SendSummaryViewModel()
     @StateObject private var swapSummaryViewModel = SwapCryptoViewModel()
 
-    @State var showAlert = false
-    @State var alertTitle = "hashCopied"
+    @State private var showAlert = false
+    @State private var alertTitle = "hashCopied"
 
     @Environment(\.openURL) var openURL
     @Environment(\.dismiss) var dismiss

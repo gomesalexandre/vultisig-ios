@@ -12,10 +12,10 @@ struct SendCryptoSecondaryDoneView: View {
     @Environment(\.router) var router
     let input: SendCryptoContent
 
-    @State var navigateToAddressBook = false
+    @State private var navigateToAddressBook = false
     @Environment(\.openURL) var openURL
-    @State var canShowAddressBook: Bool = false
-    @State var addressCountBeforeNavigation: Int = 0
+    @State private var canShowAddressBook: Bool = false
+    @State private var addressCountBeforeNavigation: Int = 0
 
     @StateObject private var statusViewModel: TransactionStatusViewModel
 
@@ -59,9 +59,13 @@ struct SendCryptoSecondaryDoneView: View {
         }
         .onLoad {
             let address = input.toAddress.lowercased()
+            let coinChainType = AddressBookChainType(coinMeta: input.coin.toCoinMeta())
             let allItemsDescriptor = FetchDescriptor<AddressBookItem>()
             let allItems = try? modelContext.fetch(allItemsDescriptor)
-            let isInAddressBook = allItems?.contains { $0.address.lowercased() == address } ?? false
+            let isInAddressBook = allItems?.contains {
+                $0.address.lowercased() == address &&
+                AddressBookChainType(coinMeta: $0.coinMeta) == coinChainType
+            } ?? false
 
             // Suppress "add to address book" if destination belongs to any vault or is already in address book
             canShowAddressBook = !isInAddressBook && input.toVaultName == nil && input.toAddressBookTitle == nil
