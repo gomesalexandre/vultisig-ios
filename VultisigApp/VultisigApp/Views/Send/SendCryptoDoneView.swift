@@ -85,6 +85,8 @@ struct SendCryptoDoneView: View {
         }?.title
     }
 
+    private var toAddressLabel: String? { sendTransaction?.toAddressLabel }
+
     func sendContent(tx: SendTransaction) -> some View {
         SendCryptoDoneContentView(
             input: SendCryptoContent(
@@ -99,6 +101,7 @@ struct SendCryptoDoneView: View {
                 toAddress: tx.toAddress,
                 toVaultName: toVaultName,
                 toAddressBookTitle: toAddressBookTitle,
+                toAddressLabel: toAddressLabel,
                 fee: FeeDisplay(crypto: tx.gasInReadable, fiat: sendSummaryViewModel.feesInReadable(tx: tx, vault: vault)),
                 keysignPayload: keysignPayload,
                 pubKeyECDSA: vault.pubKeyECDSA

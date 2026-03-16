@@ -64,8 +64,8 @@ struct SendCryptoVerifySummaryView<ContentFooter: View>: View {
             Group {
                 getValueCell(
                     for: "to",
-                    with: input.toVaultName ?? input.toAddressBookTitle ?? input.toAddress,
-                    bracketValue: (input.toVaultName ?? input.toAddressBookTitle) != nil ? input.toAddress : nil
+                    with: input.toVaultName ?? input.toAddressBookTitle ?? input.toAddressLabel ?? input.toAddress,
+                    bracketValue: (input.toVaultName ?? input.toAddressBookTitle ?? input.toAddressLabel) != nil ? input.toAddress : nil
                 )
                 Separator()
             }

@@ -11,6 +11,7 @@ struct SendCryptoVerifySummary {
     let toAddress: String
     let toVaultName: String?
     let toAddressBookTitle: String?
+    let toAddressLabel: String?
     let network: String
     let networkImage: String
     let memo: String
@@ -31,6 +32,7 @@ struct SendCryptoVerifySummary {
         toAddress: String,
         toVaultName: String? = nil,
         toAddressBookTitle: String? = nil,
+        toAddressLabel: String? = nil,
         network: String,
         networkImage: String,
         memo: String,
@@ -51,6 +53,7 @@ struct SendCryptoVerifySummary {
         self.toAddress = toAddress
         self.toVaultName = toVaultName
         self.toAddressBookTitle = toAddressBookTitle
+        self.toAddressLabel = toAddressLabel
         self.network = network
         self.networkImage = networkImage
         self.memo = memo

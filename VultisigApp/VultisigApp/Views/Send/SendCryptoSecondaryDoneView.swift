@@ -127,8 +127,8 @@ struct SendCryptoSecondaryDoneView: View {
             Group {
                 SendCryptoTransactionDetailsRow(
                     title: "to",
-                    description: input.toVaultName ?? input.toAddressBookTitle ?? input.toAddress,
-                    bracketValue: (input.toVaultName ?? input.toAddressBookTitle) != nil ? input.toAddress : nil
+                    description: input.toVaultName ?? input.toAddressBookTitle ?? input.toAddressLabel ?? input.toAddress,
+                    bracketValue: (input.toVaultName ?? input.toAddressBookTitle ?? input.toAddressLabel) != nil ? input.toAddress : nil
                 ) {
                     addToAddressBookButton
                         .showIf(showAddressBookButton)

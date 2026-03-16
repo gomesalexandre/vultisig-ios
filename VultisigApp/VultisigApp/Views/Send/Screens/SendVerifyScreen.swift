@@ -76,6 +76,8 @@ struct SendVerifyScreen: View {
         }?.title
     }
 
+    private var toAddressLabel: String? { tx.toAddressLabel }
+
     var fields: some View {
         SendCryptoVerifySummaryView(
             input: SendCryptoVerifySummary(
@@ -84,6 +86,7 @@ struct SendVerifyScreen: View {
                 toAddress: tx.toAddress,
                 toVaultName: toVaultName,
                 toAddressBookTitle: toAddressBookTitle,
+                toAddressLabel: toAddressLabel,
                 network: tx.coin.chain.name,
                 networkImage: tx.coin.chain.logo,
                 memo: tx.memo,

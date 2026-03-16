@@ -9,6 +9,7 @@ import BigInt
 class SendTransaction: ObservableObject, Hashable {
     @Published var fromAddress: String = ""
     @Published var toAddress: String = .empty
+    @Published var toAddressLabel: String? = nil
     @Published var amount: String = .empty
     @Published var amountInFiat: String = .empty
     @Published var memo: String = .empty
