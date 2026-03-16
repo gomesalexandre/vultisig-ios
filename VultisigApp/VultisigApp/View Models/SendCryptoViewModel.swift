@@ -248,9 +248,7 @@ struct SendCryptoLogic {
                     tx.toAddress = resolvedAddress
                     tx.toAddressLabel = originalInput
                     tx.lastResolvedAddress = resolvedAddress
-                } else if originalInput == tx.lastResolvedAddress {
-                    // onChange re-entry after our own resolution — skip
-                } else {
+                } else if originalInput != tx.lastResolvedAddress {
                     tx.toAddressLabel = nil
                     tx.lastResolvedAddress = nil
                 }

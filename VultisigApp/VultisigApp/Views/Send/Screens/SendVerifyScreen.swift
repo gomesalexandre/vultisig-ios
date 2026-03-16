@@ -13,8 +13,8 @@ struct SendVerifyScreen: View {
     @ObservedObject var tx: SendTransaction
     let vault: Vault
 
-    @Query var vaults: [Vault]
-    @Query var addressBookItems: [AddressBookItem]
+    @Query private var vaults: [Vault]
+    @Query private var addressBookItems: [AddressBookItem]
 
     @State private var fastPasswordPresented = false
 
